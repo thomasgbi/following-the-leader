@@ -1,0 +1,52 @@
+convert image to avi:
+	$ ls *.png| awk 'BEGIN{ a=0 }{ printf "mv %s img_%04d.png\n", $0, a++ }' | bash
+	$ ffmpeg -framerate 16 -i test/img_%04d.png -c:v copy output.avi
+
+
+##erro:
+
+CMake Error at CMakeLists.txt:14 (find_package):
+  Found package configuration file:
+
+    /usr/local/opencv-2.4.12/cmake/OpenCVConfig.cmake
+
+  but it set OpenCV_FOUND to FALSE so package "OpenCV" is considered to be
+  NOT FOUND.
+
+
+solution:
+
+cmake -D OpenCV_DIR=/usr/local/opencv-2.4.12/build ..
+
+cmake -D OpenCV_DIR=/usr/local/opencv-2.4.12/build -D Caffe_DIR=/home/thomas/caffe/build ..
+
+cmake -D OpenCV_DIR=/usr/local/opencv-2.4.12/build -D Caffe_DIR=/home/thomas/caffe/build -D Caffe_INCLUDE_DIRS=/home/thomas/caffe/include/ ..
+
+cmake -D OpenCV_DIR=/usr/local/opencv-2.4.12/build -D Caffe_DIR=/home/thomas/caffe/build -D Caffe_INCLUDE_DIRS=/home/thomas/caffe/include/ -D CUDA_INCLUDE_DIRS=/usr/local/cuda-7.5/include/ -DCUDA_USE_STATIC_CUDA_RUNTIME=OFF ..
+
+##########
+
+
+erro:
+
+In file included from /home/thomas/caffe/include/caffe/caffe.hpp:7:0,
+                 from /home/thomas/following_leader/GOTURN/src/network/regressor.h:4,
+                 from /home/thomas/following_leader/GOTURN/src/network/regressor.cpp:1:
+/home/thomas/caffe/include/caffe/blob.hpp:9:34: fatal error: caffe/proto/caffe.pb.h: No such file or directory
+ #include "caffe/proto/caffe.pb.h"
+                                  ^
+compilation terminated.
+make[2]: *** [CMakeFiles/GOTURN.dir/src/network/regressor.cpp.o] Error 1
+make[1]: *** [CMakeFiles/GOTURN.dir/all] Error 2
+make: *** [all] Error 2
+
+solution:
+
+You need to generate caffe.pb.h manually using protoc as follows.
+
+In the directory you installed Caffe to
+
+protoc src/caffe/proto/caffe.proto --cpp_out=.
+mkdir include/caffe/proto
+mv src/caffe/proto/caffe.pb.h include/caffe/proto
+

@@ -1,0 +1,24 @@
+rodar o cmt:
+$ ./cmt --bbox=631,453,148,128 --output-file=/dados/cmt20170221.csv /dados/output.avi
+
+rodar opentld:
+$ ./opentld -b 631,453,148,128 -d VID -p /dados/opentld.txt -i /dados/output.avi
+
+rodar o goturn:
+$ bash scripts/show_tracker_test.sh /dados/vot2014/
+
+o nosso ground thuth: 
+x y width heigth 
+
+opentld:
+frame x y width heigth confidence
+
+CMT:
+Frame,Timestamp (ms),Active points,Bounding box centre X (px),Bounding box centre Y (px),Bounding box width (px),Bounding box height (px),Bounding box rotation (degrees),Bounding box vertex 1 X (px),Bounding box vertex 1 Y (px),Bounding box vertex 2 X (px),Bounding box vertex 2 Y (px),Bounding box vertex 3 X (px),Bounding box vertex 3 Y (px),Bounding box vertex 4 X (px),Bounding box vertex 4 Y (px)
+ 
+
+
+o VOT 2014 dataset que roda no goturn usa o padrão:
+frameN: X1, Y1, X2, Y2, X3, Y3, X4, Y4
+
+
