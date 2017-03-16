@@ -1,7 +1,8 @@
 convert image to avi:
-	$ ls *.png| awk 'BEGIN{ a=0 }{ printf "mv %s img_%04d.png\n", $0, a++ }' | bash
+	$ ls *.png| awk 'BEGIN{ a=0 }{ printf "mv %s %08d.png\n", $0, a++ }' | bash
 	$ ffmpeg -framerate 16 -i test/img_%04d.png -c:v copy output.avi
 
+export LD_LIBRARY_PATH=/usr/local/cuda-7.5/lib64:/usr/local/MATLAB/R2016a/
 
 ##erro:
 
